@@ -18,7 +18,13 @@ export async function GET(req:Request, { params }: { params: { slug: string } })
         });
       });
       console.log(resp)
-      return Response.json(resp)
+      if(Object.keys(resp).length == 0){
+        const respObj = {email: "no@gmail.com",
+                          name: "Love"
+                          }
+        return Response.json(respObj)
+      }
+      return Response.json(resp[0])
     
 }
 
