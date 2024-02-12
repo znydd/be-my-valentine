@@ -36,7 +36,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, []);
 
   const handleYes = () => {
+    setYes(true);
+    if(email != "no@gmail.com"){
     sendEmail("It's a YES love.");
+    }
   }
 
 
@@ -68,7 +71,9 @@ export default function Page({ params }: { params: { slug: string } }) {
   const handleCount = () => {
     setNoCount(prev => prev + 1)
     if (noCount == 5) {
+      if(email != "no@gmail.com"){
       sendEmail("Sorry, It's a No.");
+      }
     }
     if (noCount >= 6) {
       setNoCount(0);
@@ -103,8 +108,8 @@ export default function Page({ params }: { params: { slug: string } }) {
           /></div> :
 
 
-        <div className=" flex flex-col items-center h-5/6 w-2/3 bg-rose-700 rounded-lg text-center pt-24">
-          <p className=" text-yellow-50 font-bold text-4xl pb-4">{`Dear ${name}, will you be my valentine?😍`}</p>
+        <div className=" flex flex-col items-center w-11/12 h-4/5 sm:h-5/6 sm:w-5/6 lg:w-2/3 bg-rose-700 rounded-lg text-center pt-24">
+          <p className=" text-yellow-50 font-bold text-4xl pb-4 mx-2 lg:mx-1">{`Dear ${name}, will you be my valentine?😍`}</p>
           {noCount == 1 && <p className=" text-black font-bold text-4xl ">You sure about that?😟</p>}
           {noCount == 2 && <p className=" text-black font-bold text-4xl ">Really sure?😨</p>}
           {noCount == 3 && <p className=" text-black font-bold text-4xl ">Don't do this to me🥺</p>}
