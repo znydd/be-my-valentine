@@ -4,9 +4,7 @@ import { NextResponse } from "next/server";
 export async function initDb() {
 
     try {
-        const result =await sql`CREATE TABLE IF NOT EXISTS lovers (link TEXT, email TEXT, name TEXT);`; 
-        console.log("table created")
-      
+        const result =await sql`CREATE TABLE IF NOT EXISTS lovers ( Link varchar(255), Email varchar(255), Name varchar(255) );`; 
         return NextResponse.json({ result }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });

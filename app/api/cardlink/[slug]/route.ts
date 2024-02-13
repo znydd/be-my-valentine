@@ -11,9 +11,8 @@ export async function GET(req:Request, { params }: { params: { slug: string } })
     const db_obj = await initDb();
     const slug = params.slug;
 
-
-    const resp = await sql`SELECT email, name FROM lovers WHERE link = ${slug}`; 
-       
+    try {
+      const resp = await sql`SELECT Email, Name FROM lovers WHERE Link = ${slug}`; 
       if(Object.keys(resp).length == 0){
         const respObj = {email: "no@gmail.com",
                           name: "Love"
@@ -22,6 +21,11 @@ export async function GET(req:Request, { params }: { params: { slug: string } })
       }
       return Response.json(resp)
     
+    } catch (error) {
+      Response.json(error);
+    }
+       
+      
 }
 
 
