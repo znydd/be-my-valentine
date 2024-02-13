@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/cardlink/${params.slug}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_CARD_LINK}${params.slug}`);
 
         if (response.ok) {
           const data = await response.json();
@@ -37,32 +37,33 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const handleYes = () => {
     setYes(true);
-    if(email != "no@gmail.com"){
-    sendEmail("It's a YES love.");
+    if (email != "no@gmail.com") {
+      sendEmail("It's a YES love.");
     }
   }
 
 
   const sendEmail = async (decision: string) => {
-  
+
     console.log(decision)
     let data = {
       service_id: process.env.NEXT_PUBLIC_SERVICE_ID,
       template_id: process.env.NEXT_PUBLIC_TEMPLATE_ID,
       user_id: process.env.NEXT_PUBLIC_USER_ID,
       template_params: {
-          from_name: name,
-          to_email: email,
-          message: decision
+        from_name: name,
+        to_email: email,
+        message: decision
       }
 
     };
     try {
-      const resp = axios.post("https://api.emailjs.com/api/v1.0/email/send", data);
+
+      const resp = axios.post(`${process.env.NEXT_PUBLIC_EMAIL_API}`, data);
       console.log(resp)
     } catch (error) {
       console.log(error);
-      
+
     }
 
   }
@@ -71,64 +72,65 @@ export default function Page({ params }: { params: { slug: string } }) {
   const handleCount = () => {
     setNoCount(prev => prev + 1)
     if (noCount == 5) {
-      if(email != "no@gmail.com"){
-      sendEmail("Sorry, It's a No.");
+      if (email != "no@gmail.com") {
+        sendEmail("Sorry, It's a No.");
       }
     }
     if (noCount >= 6) {
       setNoCount(0);
     }
-    if(noCount)
-    console.log(noCount)
+    if (noCount)
+      console.log(noCount)
   }
+
 
   return (<>
     {yes ?
-    <div className=" h-screen flex flex-col items-center justify-center bg-black">
-      <p className=" text-yellow-50 font-bold text-4xl pb-4">{`Dear ${name},You are the best🥰😘`}</p>
-      <Image
-        src="/happy.gif"
-        width={500}
-        height={500}
-        alt="happi"
-      />
-    </div>:
+      <div className=" h-screen flex flex-col items-center justify-center bg-black">
+        <p className=" text-yellow-50 font-bold text-4xl pb-4">{`Dear ${name},You are the best🥰😘`}</p>
+        <Image
+          src="/happy.gif"
+          width={500}
+          height={500}
+          alt="happi"
+        />
+      </div> :
 
-    <div className=" h-screen flex flex-col items-center justify-center bg-black">
+      <div className=" h-screen flex flex-col items-center justify-center bg-black">
 
-      {noCount == 6 ?
+        {noCount == 6 ?
 
-        <div>
-          <p className=" text-yellow-50 font-bold text-4xl pb-4">{`Dear ${name}, God may blast you😡`}</p>
-          <Image
-            src="/cry.jpg"
-            width={500}
-            height={500}
-            alt="cry"
-          /></div> :
+          <div>
+            <p className=" text-yellow-50 font-bold text-4xl pb-4">{`Dear ${name}, God may blast you😡`}</p>
+            <Image
+              src="/cry.jpg"
+              width={500}
+              height={500}
+              alt="cry"
+            /></div> :
 
 
-        <div className=" flex flex-col items-center w-11/12 h-4/5 sm:h-5/6 sm:w-5/6 lg:w-2/3 bg-rose-700 rounded-lg text-center pt-24">
-          <p className=" text-yellow-50 font-bold text-4xl pb-4 mx-2 lg:mx-1">{`Dear ${name}, will you be my valentine?😍`}</p>
-          {noCount == 1 && <p className=" text-black font-bold text-4xl ">You sure about that?😟</p>}
-          {noCount == 2 && <p className=" text-black font-bold text-4xl ">Really sure?😨</p>}
-          {noCount == 3 && <p className=" text-black font-bold text-4xl ">Don't do this to me🥺</p>}
-          {noCount == 4 && <p className=" text-black font-bold text-4xl ">I am gonna cry...😖</p>}
-          {noCount == 5 && <p className=" text-black font-bold text-4xl ">You're breaking my heart😭</p>}
-          <div className="flex flex-row space-x-2 items-center justify-center h-4/5 w-full">
+          <div className=" flex flex-col items-center w-11/12 h-4/5 sm:h-5/6 sm:w-5/6 lg:w-2/3 bg-rose-700 rounded-lg text-center pt-24">
+            <p className=" text-yellow-50 font-bold text-4xl pb-4 mx-2 lg:mx-1">{`Dear ${name}, will you be my valentine?😍`}</p>
+            {noCount == 1 && <p className=" text-black font-bold text-4xl ">You sure about that?😟</p>}
+            {noCount == 2 && <p className=" text-black font-bold text-4xl ">Really sure?😨</p>}
+            {noCount == 3 && <p className=" text-black font-bold text-4xl ">Don't do this to me🥺</p>}
+            {noCount == 4 && <p className=" text-black font-bold text-4xl ">I am gonna cry...😖</p>}
+            {noCount == 5 && <p className=" text-black font-bold text-4xl ">You're breaking my heart😭</p>}
+            <div className="flex flex-row space-x-2 items-center justify-center h-4/5 w-full">
 
-            {(noCount == 0) && <button onClick={handleYes} className={`w-40 h-16 text-xl bg-[#faecbc] rounded-md`}>Yes</button>}
-            {noCount == 1 && <button onClick={handleYes} className={`w-52 h-20 text-2xl bg-[#faecbc] rounded-md`}>Yes</button>}
-            {noCount == 2 && <button onClick={handleYes} className={`w-60 h-24 text-3xl bg-[#faecbc] rounded-md`}>Yes</button>}
-            {noCount == 3 && <button onClick={handleYes} className={`w-72 h-32 text-4xl bg-[#faecbc] rounded-md`}>Yes</button>}
-            {noCount == 4 && <button onClick={handleYes} className={`w-96 h-40 text-5xl bg-[#faecbc] rounded-md`}>Yes</button>}
-            {noCount == 5 && <button onClick={handleYes} className={`w-[30rem] h-48 text-6xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {(noCount == 0) && <button onClick={handleYes} className={`w-40 h-16 text-xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {noCount == 1 && <button onClick={handleYes} className={`w-52 h-20 text-2xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {noCount == 2 && <button onClick={handleYes} className={`w-60 h-24 text-3xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {noCount == 3 && <button onClick={handleYes} className={`w-72 h-32 text-4xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {noCount == 4 && <button onClick={handleYes} className={`w-96 h-40 text-5xl bg-[#faecbc] rounded-md`}>Yes</button>}
+              {noCount == 5 && <button onClick={handleYes} className={`w-[30rem] h-48 text-6xl bg-[#faecbc] rounded-md`}>Yes</button>}
 
-            <button className="w-36 h-14 bg-black text-white rounded-md" onClick={handleCount}>No</button>
-          </div>
-        </div>}
-    </div>
-}
+              <button className="w-36 h-14 bg-black text-white rounded-md" onClick={handleCount}>No</button>
+            </div>
+          </div>}
+      </div>
+    }
   </>
   )
 }

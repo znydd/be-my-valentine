@@ -1,7 +1,7 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
-import Image from "next/image";
+import { FormEvent, useRef, useState } from "react";
+
 
 export default function Home() {
   const [name, setName] = useState('');
@@ -15,7 +15,7 @@ export default function Home() {
     const data = { 'name': name, 'email': email };
 
     try {
-      const response = await fetch('http://localhost:3000/api/createlink', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_CREATE_LINK}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export default function Home() {
         setSubmited(true);
         const res = await response.json();
         setLink(res.link);
-        await navigator.clipboard.writeText(`cardlink/${link}`);
+        await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_BASE_URL}cardlink/${res.link}`);
       } else {
         // Handle errors here
         console.error('Failed to submit form data');
@@ -39,24 +39,13 @@ export default function Home() {
     }
 
   }
-  // const textToCopy = `cardlink/${link}` 
-  // const handleCopyClick = async () => {
-  //   try {
-  //     if (textAreaRef.current) {
-  //       await navigator.clipboard.writeText(textToCopy);
-  //       console.log('Text copied to clipboard:', textToCopy);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error copying to clipboard:', error);
-  //   }
-  // };
 
   return (
     <main className=" h-screen flex flex-col items-center justify-center bg-black">
-      <p className=" text-red-500 text-center text-xl font-bold px-4 pb-10 sm:pb-32 sm:text-5xl">
-        Valentines day proposal card for lonely & desparate
+      <p className=" text-rose-700 text-center text-xl font-bold px-4 pb-10 sm:pb-32 sm:text-5xl">
+        Valentine's day proposal card for lonely & desparate
       </p>
-      <div className=" flex flex-col items-center justify-center  h-1/2 w-10/12 lg:w-1/3 md:w-8/12 sm:w-1/3 bg-red-600 rounded-md">
+      <div className=" flex flex-col items-center justify-center  h-1/2 w-10/12 lg:w-1/3 md:w-8/12 sm:w-1/3 bg-rose-700 rounded-md">
         <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
 
           <p className=" text-black font-extrabold text-xl sm:text-2xl pb-3">
