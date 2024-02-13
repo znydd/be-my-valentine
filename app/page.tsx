@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className=" h-screen flex flex-col items-center justify-center bg-black">
       <p className=" text-rose-700 text-center text-xl font-bold px-4 pb-10 sm:pb-32 sm:text-5xl">
-        {`Valentine's day proposal card for lonely & desparate`}
+        Valentine&ampos;s day proposal card for lonely & desparate
       </p>
       <div className=" flex flex-col items-center justify-center  h-1/2 w-10/12 lg:w-1/3 md:w-8/12 sm:w-1/3 bg-rose-700 rounded-md">
         <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">

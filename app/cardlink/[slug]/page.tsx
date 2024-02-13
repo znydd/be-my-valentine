@@ -114,9 +114,9 @@ export default function Page({ params }: { params: { slug: string } }) {
             <p className=" text-yellow-50 font-bold text-4xl pb-4 mx-2 lg:mx-1">{`Dear ${name}, will you be my valentine?😍`}</p>
             {noCount == 1 && <p className=" text-black font-bold text-4xl ">You sure about that?😟</p>}
             {noCount == 2 && <p className=" text-black font-bold text-4xl ">Really sure?😨</p>}
-            {noCount == 3 && <p className=" text-black font-bold text-4xl ">Don't do this to me🥺</p>}
+            {noCount == 3 && <p className=" text-black font-bold text-4xl ">Don&ampos;t do this to me🥺</p>}
             {noCount == 4 && <p className=" text-black font-bold text-4xl ">I am gonna cry...😖</p>}
-            {noCount == 5 && <p className=" text-black font-bold text-4xl ">You're breaking my heart😭</p>}
+            {noCount == 5 && <p className=" text-black font-bold text-4xl ">You&ampos;re breaking my heart😭</p>}
             <div className="flex flex-row space-x-2 items-center justify-center h-4/5 w-full">
 
               {(noCount == 0) && <button onClick={handleYes} className={`w-40 h-16 text-xl bg-[#faecbc] rounded-md`}>Yes</button>}
