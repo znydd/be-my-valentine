@@ -1,4 +1,5 @@
 import { initDb } from "@/db"
+import { sql } from "@vercel/postgres";
 
 type Lover = [{
     link: string,
@@ -7,23 +8,19 @@ type Lover = [{
 }];
 
 export async function GET(req:Request, { params }: { params: { slug: string } }) {
-    const db = await initDb();
+    const db_obj = await initDb();
     const slug = params.slug;
 
 
-    const resp:Lover = await new Promise((resolve, reject) => {
-        db.all(`SELECT email, name FROM lovers WHERE link = ${slug}`, (err: Error, rows:Lover) => {
-          if (err) reject(err);
-          else resolve(rows); 
-        });
-      });
+    const resp = await sql`SELECT email, name FROM lovers WHERE link = ${slug}`; 
+       
       if(Object.keys(resp).length == 0){
         const respObj = {email: "no@gmail.com",
                           name: "Love"
                           }
         return Response.json(respObj)
       }
-      return Response.json(resp[0])
+      return Response.json(resp)
     
 }
 
